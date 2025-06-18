@@ -1,0 +1,50 @@
+Sales Data Analysis
+
+
+## Problem Statement
+There is one Company name Electrohub that has outlets in different areas and it contains the product that belongs to the category like Electronics, Footwear, Clothing, Home Appliances, Accessories, Kitchenware, Bags and Personal Care. It has Data of different customers that visits the store in different areas for offline purchasing. Then it has the data for all the products under different categories, the quantity of each product sold, net sales and total profit gained from each product sales. It also contains the details of promotion code that is applied to different products to increase the sale and profit. This dashboard helps the company to understand their customers and their requirements better. It helps to understand the total sales and profit earned by each profit, the most purchased product and kind of promotion code applied and discount provided. It helps to understand the sales of different products in different areas and cities. It also let us know the Top 5 and bottom 5 products sold, the quantity of each product and the profit gained. It also helps us to know the variation of sales on daily, weekly, monthly, quarterly, yearly and over a period of time basis to get the better understanding of interest of customers.
+
+## Steps Followed :
+
+Step 1 : Load the data into Power BI Desktop, the dataset is a excel file. The dataset contains the 4 tables(Dim Customer, Dim Promotion, Dim Product, Fact table)
+Step 2 : Open power query editor & in view tab under Data preview section, check "column distribution", "column quality" & "column profile" options.
+Step 3 : Also since by default, profile will be opened only for 1000 rows so you need to select "column profiling based on entire dataset".
+Step 4 : In Dim Promotion table, navigate to "Add Column" tab then define the rules as per the values in "Price Reduction Type" column to get the percentage of discount offered for the products.
+Step 5: The Fact table contains the data of the sales, so it has columns with null values, so to get the data for null values, Data Transformation is applied.
+Step 6 : For "Price per Unit" column in 'Fact table' contains 0% valid values, so for the valid values, pulled the data from 'Dim Product' table by applying 'Merge Queries' option under 'Home' tab. It give option to select the tables and columns to merge the tables similar to the joins in sql.
+Step 7 : For "Total Sales" column in 'Fact table' contains 0% valid values, so for the valid values, performed the operation ("Price per Unit" * "Units sold") columns from 'Fact Table' by navigating to "Add column" tab and selecting "Custom Column".
+Step 8 :For "Discount Percentage" column in 'Fact table' contains 0% valid values, so for the valid values, pulled the data from 'Dim Promotion' table by applying 'Merge Queries' option under 'Home' tab. It give option to select the tables and columns to merge the tables similar to the joins in sql.
+Step 9 : For "Discount Value" column in 'Fact table' contains 0% valid values, so for the valid values, performed the operation (("Total Sales" * "Discount Percentage")/100) columns from 'Fact Table' by navigating to "Add column" tab and selecting "Custom Column".
+Step 10 : For "Net Sales" column in 'Fact table' contains 0% valid values, so for the valid values, performed the operation ("Total Sales" - "Discount Value") columns from 'Fact Table' by navigating to "Add column" tab and selecting "Custom Column".
+Step 11 : After applying all the transformations, navigate to 'Data Model View' from left navigation pane and create the relationship between Dim tables and Fact table .
+Step 12 : Since the data contains various products, in the 'Report View', 6 visuals are selected to represent Top and Bottom 5 Products by Sales/Profit/Quantity sold.
+Step 13 : For "Profit" column in 'Fact table', performed the operation (0.1 * Net Sales)(assuming the profit is 10% of net sales) by navigating to "Add column" tab and selecting "Custom Column".
+Step 13 :Using Visual level Filter from Filters pane, Top 5 and Bottom 5 products are filters out for each visual and then visual formatting is performed for each visual under Visualization pane.
+Step 14 : For Sales Trend over time, select 'Line Chart' from Visualization pane and plot the graph for Net sales by Date from 'Fact Table'. By using the drill down arrow in visual, we can check for the sales trend on Daily, Weekly, Monthly and Yearly basis. Then also formatting the visual for better presentation under visualization pane.
+Step 15 : Another visual is selected to show relationship between Net Sales and Profit and then formatting is performed.
+Step 16 : Another visual is selected to show Average discount offered in various discount category and then formatting is performed.
+          Using visual level filter from the filters pane, basic filtering was used & blank values were unselected.
+Step 17 : Another visual(Map) is selected to show sales in different cities and then formatting is performed.
+Step 18 : To get the total number of orders, added the index column and name 'Order ID' in Power Query Editor by selecting 'Add Index Column' from table icon present at the left of table structure.
+Step 19 : Add visual(Card) and select Order Id and the select Order(Distinct) option from drop down from visualization pane and then formatting is performed.
+Step 20 : To compare sales/profit/quantity sold between any 2 periods, created the 2 date tables from below DAX query under 'Modeling' tab by selecting 'New Table' option.
+          Date Table 1 : CALENDERAUTO()(will create a table with date column by referring to the other tables having date columns)
+	  Date Table 2 : CALENDERAUTO()(will create a table with date column by referring to the other tables having date columns)
+Create the relationship of date tables with the Fact table under Data Model view.
+Step 21 : Add visual(Slicer) for both Date Tables.
+Step 22 : Create new measure by selecting New Measure option and writing below DAX query :
+          For net sales : Sum of Net Sales = CALCULATE(SUM(net sales from table fact),all(date table 1), USERALATIONSHIP(Fact table, Date Table 2))
+Note : Here the relationship between Date Table 2 and Fact Table was inactive, so to make it active we used USERELATIONSHIP function.
+Step 23 : Add Visual to represent the graphs for both Date Table 1 and Date table 2.
+          Follow step 22 and 23 for profit and quantity as well and then perform formatting for all the visuals.
+
+Step 22 and 23 can also be performed in one more way by using 'Edit Interactions' :
+	a) No need to define Date Table 1 and Date Table 2, just create slicer by using Date column from Fact table.
+	b) Create a bar chart and plot Sum of Net sales by selecting net sales from Fact table. Perform the similar task for profit as well quantity sold. Then perform 	   the formatting.
+	c) Plot the same 3 chart for the Slicer 2 as well.
+	d) Select Date slicer 1, click on 'Edit Interactions' under 'Format' tab.
+	e) Apply Filter behavior to None for all the charts created for Date Filter 2 and perform the same operation for chart created for Date Filter 1.So that when      	   we change the Date Filter 1 slicer the Date Filter 2 slicers are not updated and vice versa.
+Note : The second approach is better as there is no need to create the Date tables, so it will not increase the Data Model View size, so second approach is recommended.
+
+Step 24 : To show all the details for each order, visual filter(Product/Date/Customer ID/Promotion Categories) is created by using slicer for each filter and then applying Style as Dropdown under the Visual while formatting the visual and also a Table(same as Fact Table is created to get the complete data of the table using Table visual).
+

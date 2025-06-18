@@ -28,18 +28,24 @@ The dashboard also analyzes sales trends over different time periods—daily, we
 - Step 13 : For "Profit" column in 'Fact table', performed the operation (0.1 * Net Sales)(assuming the profit is 10% of net sales) by navigating to "Add column" tab and selecting "Custom Column".
 - Step 14 :Using Visual level Filter from Filters pane, Top 5 and Bottom 5 products are filters out for each visual and then visual formatting is performed for each visual under Visualization pane.
 
-Snap of Top Sales and Bottom Sales of all the Products
+### Snap of Top Sales and Bottom Sales of all the Products
+![TopandBottomSales](https://github.com/user-attachments/assets/5ae860eb-ff89-4770-bf9f-b1c0d16dd09f)
 
-Snap of Top Sales and Bottom Profit of all the Products
+
+### Snap of Top Sales and Bottom Profit of all the Products
+![TopandBottomProfit](https://github.com/user-attachments/assets/2638545b-a098-451e-bc7c-a9d2baa7a060)
+
 
 - Step 15 : For Sales Trend over time, select 'Line Chart' from Visualization pane and plot the graph for Net sales by Date from 'Fact Table'. By using the drill down arrow in visual, we can check for the sales trend on Daily, Weekly, Monthly and Yearly basis. Then also formatting the visual for better presentation under visualization pane.
 
-Snap of Sales Trend 
+### Snap of Sales Trend 
+![SalesTrend](https://github.com/user-attachments/assets/54f3c3f4-9754-4747-9f7b-3d6c9a556cdb)
 
 
 - Step 16 : Another visual is selected to show relationship between Net Sales and Profit and then formatting is performed.
 
-Snap of Profit vs Net Sales
+### Snap of Profit vs Net Sales
+![ProfitvsNetSales](https://github.com/user-attachments/assets/fe1cae3d-c30b-46f2-8ff2-99216ec9f093)
 
 
 

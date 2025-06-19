@@ -29,49 +29,55 @@ The dashboard also analyzes sales trends over different time periods—daily, we
 - Step 14 :Using Visual level Filter from Filters pane, Top 5 and Bottom 5 products are filters out for each visual and then visual formatting is performed for each visual under Visualization pane.
 
 ### Snap of Top Sales and Bottom Sales of all the Products
-![TopandBottomSales](https://github.com/user-attachments/assets/5ae860eb-ff89-4770-bf9f-b1c0d16dd09f)
-
-
-### Snap of Top Sales and Bottom Profit of all the Products
-![TopandBottomProfit](https://github.com/user-attachments/assets/2638545b-a098-451e-bc7c-a9d2baa7a060)
+![image](https://github.com/user-attachments/assets/00439189-2e47-4667-bbcb-f8712e03cf0b)
 
 
 - Step 15 : For Sales Trend over time, select 'Line Chart' from Visualization pane and plot the graph for Net sales by Date from 'Fact Table'. By using the drill down arrow in visual, we can check for the sales trend on Daily, Weekly, Monthly and Yearly basis. Then also formatting the visual for better presentation under visualization pane.
-
-### Snap of Sales Trend 
-![SalesTrend](https://github.com/user-attachments/assets/54f3c3f4-9754-4747-9f7b-3d6c9a556cdb)
-
-
 - Step 16 : Another visual is selected to show relationship between Net Sales and Profit and then formatting is performed.
-
-### Snap of Profit vs Net Sales
-![ProfitvsNetSales](https://github.com/user-attachments/assets/fe1cae3d-c30b-46f2-8ff2-99216ec9f093)
-
-
-
 - Step 17 : Another visual is selected to show Average discount offered in various discount category and then formatting is performed.
           Using visual level filter from the filters pane, basic filtering was used & blank values were unselected.
 - Step 18 : Another visual(Map) is selected to show sales in different cities and then formatting is performed.
 - Step 19 : To get the total number of orders, added the index column and name 'Order ID' in Power Query Editor by selecting 'Add Index Column' from table icon present at the left of table structure.
+
+### Snap of Trends over period of time/Sales by City/Sales by Promotion Name
+![image](https://github.com/user-attachments/assets/40e19ff3-e45a-4761-a6c9-0b59c9e5eaf1)
+
 - Step 20 : Add visual(Card) and select Order Id and the select Order(Distinct) option from drop down from visualization pane and then formatting is performed.
 - Step 21 : To compare sales/profit/quantity sold between any 2 periods, created the 2 date tables from below DAX query under 'Modeling' tab by selecting 'New Table' option.
           Date Table 1 : CALENDERAUTO()(will create a table with date column by referring to the other tables having date columns)
 	  Date Table 2 : CALENDERAUTO()(will create a table with date column by referring to the other tables having date columns)
+
+### Dax Query
+		To create new date tables, CALENDERAUTO() is used
+		Date Table 1 = CALENDARAUTO()
+
 Create the relationship of date tables with the Fact table under Data Model view.
 - Step 22 : Add visual(Slicer) for both Date Tables.
 - Step 23 : Create new measure by selecting New Measure option and writing below DAX query :
           For net sales : Sum of Net Sales = CALCULATE(SUM(net sales from table fact),all(date table 1), USERALATIONSHIP(Fact table, Date Table 2))
+
+### Dax Query
+		(1) Created Net Sales Measure to show sales between any two period of times :
+		Sum of Net Sales = CALCULATE(SUM('Fact Table'[Net Sales]), ALL('Date Table 1'),USERELATIONSHIP('Date Table 2'[Date],'Fact Table'[Date (dd/mm/yyyy)]))
+
+		(2) Created Total Profit Measure to show Profit between any two period of times :
+		Total Profit = CALCULATE(sum('Fact Table'[Profit]), ALL('Date Table 1'),USERELATIONSHIP('Date Table 2'[Date],'Fact Table'[Date (dd/mm/yyyy)]))
+
+		(3) Created Total Quantity Sold Measure to show Quantity sold between any two period of times :
+  		Total Quantity sold = CALCULATE(SUM('Fact Table'[Units Sold]),ALL('Date Table 1'),USERELATIONSHIP('Date Table 2'[Date],'Fact Table'[Date (dd/mm/yyyy)]))
+
+  
 Note : Here the relationship between Date Table 2 and Fact Table was inactive, so to make it active we used USERELATIONSHIP function.
 - Step 24 : Add Visual to represent the graphs for both Date Table 1 and Date table 2.
           Follow step 22 and 23 for profit and quantity as well and then perform formatting for all the visuals.
+  
+### Snap of Comparison sales/profit/quantity/ between any period of time
+![image](https://github.com/user-attachments/assets/70183ce7-870f-483d-a89c-7718ddb601d3)
 
-- Step 23 and 24 can also be performed in one more way by using 'Edit Interactions' :
-	(a) No need to define Date Table 1 and Date Table 2, just create slicer by using Date column from Fact table.
-	(b) Create a bar chart and plot Sum of Net sales by selecting net sales from Fact table. Perform the similar task for profit as well quantity sold. Then perform 	   the formatting.
-	(c) Plot the same 3 chart for the Slicer 2 as well.
-	(d) Select Date slicer 1, click on 'Edit Interactions' under 'Format' tab.
-	(e) Apply Filter behavior to None for all the charts created for Date Filter 2 and perform the same operation for chart created for Date Filter 1.So that when      	   we change the Date Filter 1 slicer the Date Filter 2 slicers are not updated and vice versa.
-Note : The second approach is better as there is no need to create the Date tables, so it will not increase the Data Model View size, so second approach is recommended.
 
 - Step 25 : To show all the details for each order, visual filter(Product/Date/Customer ID/Promotion Categories) is created by using slicer for each filter and then applying Style as Dropdown under the Visual while formatting the visual and also a Table(same as Fact Table is created to get the complete data of the table using Table visual).
+
+### Snap of complete data with filters(Data/Customer Name/Product Name/Promotion Name)
+![image](https://github.com/user-attachments/assets/979636c0-e933-414f-9afc-d58d781d0479)
+
 
